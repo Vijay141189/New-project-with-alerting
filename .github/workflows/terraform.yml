@@ -61,6 +61,29 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # trufflehog needs full history to scan commits
+
+      - name: TruffleHog (secret scan)
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: .
+          extra_args: --only-verified
+
+      - name: TFLint (setup)
+        uses: terraform-linters/setup-tflint@v4
+        with:
+          tflint_version: latest
+
+      - name: TFLint (run)
+        run: |
+          tflint --init
+          tflint --recursive --format=compact
+
+      - name: tfsec (security scan)
+        uses: aquasecurity/tfsec-action@v1.0.3
+        with:
+          soft_fail: false   # set true if you only want warnings, not a hard fail
 
       - uses: hashicorp/setup-terraform@v3
         with:
