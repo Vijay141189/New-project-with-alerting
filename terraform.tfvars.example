@@ -1,0 +1,34 @@
+project_name = "realestate"
+environment  = "dev"
+location     = "centralindia"
+
+app_service_sku = "B1"
+
+postgres_admin_username = "pgadmin"
+# Do NOT put the real password here if committing to git.
+# export TF_VAR_postgres_admin_password="YourStrongPassword123!"
+
+# Add or remove backend microservices here - for_each in main.tf
+# will create/destroy the matching App Service automatically.
+backend_services = {
+  listing = {
+    description = "Property listing and search API"
+  }
+  booking = {
+    description = "Booking and availability API"
+  }
+  payment = {
+    description = "Payment processing API"
+  }
+}
+
+storage_containers = {
+  "property-media" = "private"
+  "documents"       = "private"
+}
+
+tags = {
+  project   = "realestate-digital-transformation"
+  managedBy = "terraform"
+  owner     = "your-team-name"
+}
