@@ -8,12 +8,16 @@ terraform {
     }
   }
 
-  # Backend config is supplied at `terraform init` time via
-  # `-backend-config=envs/<env>/backend.hcl` (see envs/ and the CI pipeline
-  # in .github/workflows/terraform.yml). Keeping this block empty lets the
-  # same code deploy dev/staging/prod into separate state files/containers.
-  backend "azurerm" {}
+
+  backend "azurerm" {
+    resource_group_name  = "rg-terraform-state"
+    storage_account_name = "tfstatestorageac2"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+  }
 }
+  
+
 
 provider "azurerm" {
   features {
