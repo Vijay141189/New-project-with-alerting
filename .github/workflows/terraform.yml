@@ -27,7 +27,7 @@ jobs:
       - name: Azure login
         uses: azure/login@v2
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ secrets.AZURE_CREDENTIAL }}
 
       - name: Terraform Init
         run: terraform init -input=false
@@ -49,7 +49,7 @@ jobs:
       - name: Azure login
         uses: azure/login@v2
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ secrets.AZURE_CREDENTIAL }}
 
       - name: Terraform Init
         run: terraform init -input=false
